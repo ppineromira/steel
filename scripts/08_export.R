@@ -21,11 +21,11 @@ if(export == TRUE){
       changeOldFnamCodes(columnsToConvert = "Set_j", to = "FIGARO") %>% 
       changeIsoCodes(columnsToConvert = c("ctr", "m"), to = "iso2c") %>% 
       changeCodesFNAM(to = "FNAM", c("Set_i", "Set_j", "ctr", "m")) %>% 
-      anti_join(useFnam %>% bind_rows(makeFnam), by = c("ctr",  "m",  "Set_i", "Set_j")) %>% 
-      filter((!Set_i %in% product64fnam) & (Set_j != "S2")) %>% 
-      filter((!Set_j %in% industry64fnam) & (Set_i != "P7"))
-    
-  }
+      anti_join(useFnam %>% bind_rows(makeFnam, s2Cpa, p7Nace), 
+                by = c("ctr",  "m",  "Set_i", "Set_j")) %>% 
+      filter((!Set_i %in% disCpa$FIGARO_64) & (Set_j != "S2"),
+             (!Set_j %in% disNace$FIGARO_64) & (Set_i != "P7"))
+      }
   
   fnamFinal <- makeFinal %>% 
     bind_rows(useFinal, s2Cpa, p7Nace, fnamRest) %>% 
@@ -111,15 +111,15 @@ if(export == TRUE){
     
     if(ctrGdx == "All"){
       
-      dt$write(paste0("outputFiles/FNAM.gdx"))
+      dt$write(paste0(exportPath , "FNAM.gdx"))
       
-      fwrite(fnamFinalCtr, "outputFiles/FNAM.csv")
+      fwrite(fnamFinalCtr, paste0(exportPath , "FNAM.csv"))
       
     } else if(ctrGdx != "All"){
       
-      dt$write(paste0("outputFiles/FNAM_2017_", ctrGdx,".gdx"))
+      dt$write(paste0(exportPath, "FNAM_2017_", ctrGdx,".gdx"))
       
-      fwrite(fnamFinalCtr, paste0("outputFiles/FNAM_2017_", ctrGdx,".csv"))
+      fwrite(fnamFinalCtr, paste0(exportPath , "FNAM_2017_", ctrGdx,".csv"))
       
     }
     

@@ -44,5 +44,6 @@ source("scripts/06_aggregatesTrade.R")
 source("scripts/07_investments.R")
 
 export <- TRUE
+exportPath <- "/delta/JRC/B/B.7/amadeus/Steel/"
 source("scripts/08_export.R")
 
