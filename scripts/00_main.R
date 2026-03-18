@@ -16,32 +16,33 @@ source("config/config.R")
 
 # PROCESS -----------------------------------------------------------------
 # Load classifications
-source("scripts/dissagregation/01_classifications.R")
-
-# Aggregate FIGARO-E3 when needed (rows and columns not dissagregated)
-source("scripts/dissagregation/02_processE3.R")
-
-# Call SUTs from FNAM (define year)
-tPeriod <- 2017
-source("scripts/dissagregation/03_callSUTs.R")
-
-# Create prior
-adjustNeg <- FALSE
-source("scripts/dissagregation/04_createPrior.R")
-
-# Balance dissagregated SUT
-checkCondition <- FALSE 
-source("scripts/dissagregation/05_balance.R")
-
-# Estimate aggregates for trade
-source("scripts/dissagregation/06_aggregatesTrade.R")
-
-# Estimate investment matrix
-source("scripts/dissagregation/07_investments.R")
-
-export <- TRUE
-source("scripts/dissagregation/08_export.R")
+source("scripts/01_classifications.R")
 
 # Disconnect database
 DBI::dbDisconnect(conAMA)
 DBI::dbDisconnect(conFIG)
+
+# Aggregate FIGARO-E3 when needed (rows and columns not dissagregated)
+source("scripts/02_processE3.R")
+
+# Call SUTs from FNAM (define year)
+tPeriod <- 2017
+source("scripts/03_callSUTs.R")
+
+# Create prior
+adjustNeg <- FALSE
+source("scripts/04_createPrior.R")
+
+# Balance dissagregated SUT
+checkCondition <- FALSE 
+source("scripts/05_balance.R")
+
+# Estimate aggregates for trade
+source("scripts/06_aggregatesTrade.R")
+
+# Estimate investment matrix
+source("scripts/07_investments.R")
+
+export <- TRUE
+source("scripts/08_export.R")
+
